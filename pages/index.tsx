@@ -4,10 +4,12 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import ApplyForm from '@/component/ApplyForm'
 import { RootLayout } from '@/layout/layout'
+import { useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
   return (
     <>
       <Head>
@@ -17,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RootLayout>
-        <ApplyForm />
+        <ApplyForm/>
       </RootLayout>
     </>
   )
