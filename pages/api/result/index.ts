@@ -58,6 +58,7 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                 targetRow.set('참가호텔', req.body.type);
                 targetRow.set('기업명', req.body.companyRank);
                 targetRow.set('가입경로', req.body.source);
+                targetRow.set('직책', req.body.position);
                 targetRow.set('소속', req.body.affiliation);
                 targetRow.set('지원', req.body.supporttype);
                 targetRow.set('선택옵션', req.body.detailType);
@@ -68,6 +69,7 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                     '이름': req.body.name,
                     '참가호텔': req.body.type,
                     '전화번호': req.body.phone, 
+                    '직책': req.body.position, 
                     '이메일': req.body.email,
                     '기업명': req.body.companyRank,
                     '가입경로': req.body.source,
