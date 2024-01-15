@@ -21,7 +21,14 @@ type OptionFormProps = {
         department: string;
         position: string;
     };
-    updateInfoData: (field: string, value: any) => void;
+    
+    updateInfoData: (newData: {
+        hotel?: string;
+        roomType?: string;
+        companyName?: string;
+        position?: string;
+        department?: string;
+    }) => void;
     hotelRef: React.RefObject<HTMLSelectElement>;
     roomTypeRef: React.RefObject<HTMLSelectElement>;
     companyNameRef: React.RefObject<HTMLInputElement>;
@@ -85,25 +92,27 @@ const OptionForm = ({
 
     const handleHotelChange = (event: SelectChangeEvent) => {
         const selectedHotel = event.target.value as string;
-        updateInfoData('hotel', selectedHotel);
+        updateInfoData({ hotel: selectedHotel });
         setSelectedHotelInfo(hotelsInfo[selectedHotel]);
-        handleTypeOPtion(selectedHotel);
+        setTypeOptions(hotelsInfo[selectedHotel].typeOptions);
     };
 
-    const handleTypeOPtion = (selectedHotel: string) => {
-        if(hotelsInfo[selectedHotel]) {
-            setTypeOptions(hotelsInfo[selectedHotel].typeOptions);
-        } else {
-            setTypeOptions([]);
-        }
-        const typeOptions = hotelsInfo[selectedHotel];
-        updateInfoData('roomType', "")
-        return typeOptions;
+    // const handleTypeOPtion = (selectedHotel: string) => {
+    //     if(hotelsInfo[selectedHotel]) {
+    //         setTypeOptions(hotelsInfo[selectedHotel].typeOptions);
+    //     } else {
+    //         setTypeOptions([]);
+    //         updateInfoData({ roomType: '' })
+    //     }
+    // }
+    const handleRoomTypeChange = (event: SelectChangeEvent) => {
+        const selectedRoomType = event.target.value as string;
+        updateInfoData({ roomType: selectedRoomType })
     }
 
     const handleFieldChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = (event.target as HTMLInputElement).value;
-        updateInfoData(field, value);
+        updateInfoData({ [field]:value });
     };
 
     const handlePrivacyPolicyCheck = (status: any) => {
@@ -117,6 +126,8 @@ const OptionForm = ({
         }
     }, [router.query.isAccepted]);
 
+    console.log(infoData);
+    
     return (
         <>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
@@ -136,9 +147,14 @@ const OptionForm = ({
                             inputRef={hotelRef}
                             onChange={handleHotelChange}
                         >
-                            <MenuItem value="호텔A">호텔A</MenuItem>
+                            {Object.keys(hotelsInfo).map((key) => (
+                                <MenuItem key={key} value={key}>
+                                    {key}
+                                </MenuItem>
+                            ))}
+                            {/* <MenuItem value="호텔A">호텔A</MenuItem>
                             <MenuItem value="호텔B">호텔B</MenuItem>
-                            <MenuItem value="호텔C">호텔C</MenuItem>
+                            <MenuItem value="호텔C">호텔C</MenuItem> */}
                             {/* 여기에 더 많은 호텔 옵션을 추가할 수 있습니다 */}
                         </Select>
                     </FormControl>
@@ -176,7 +192,7 @@ const OptionForm = ({
                                 id="roomType"
                                 label="Room Type"
                                 value={infoData.roomType}
-                                onChange={handleFieldChange('roomType')}
+                                onChange={handleRoomTypeChange}
                             >
                                 {typeOptions.map((typeOption, index) => (
                                     <MenuItem key={index} value={typeOption}>{typeOption}</MenuItem>
