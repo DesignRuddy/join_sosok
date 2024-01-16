@@ -222,7 +222,7 @@ export default function Checkout(props: parentsProps) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="absolute"
         color="default"
         elevation={0}
@@ -236,7 +236,7 @@ export default function Checkout(props: parentsProps) {
             부산 워케이션(이미지?)
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }} onSubmit={handleSubmit}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h5" align="center">
@@ -286,7 +286,7 @@ export default function Checkout(props: parentsProps) {
             </React.Fragment>
           )}
         </Paper>
-        <Copyright />
+        {/* <Copyright /> */}
       </Container>
     </React.Fragment>
   );
