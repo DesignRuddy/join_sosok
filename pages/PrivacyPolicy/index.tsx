@@ -263,7 +263,7 @@ const PrivacyPolicy = () => {
                         개인정보 수집이용 및 제공하는 것에 동의합니다.
                     </Typography>
 
-                    <Button variant="contained" color="success" onClick={handleAcceptanceChange} sx={{ mt: 2 }}>
+                    <Button variant="contained" color="primary" onClick={handleAcceptanceChange} sx={{ mt: 2 }}>
                         동의합니다
                     </Button>
                 </Box>

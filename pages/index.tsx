@@ -22,10 +22,10 @@ export default function Home({ children }: any) {
           root: {
             // 모든 스텝 아이콘에 적용
             '&.Mui-completed': {
-              color: 'lightgreen', //스텝 아이콘
+              color: 'primary', //스텝 아이콘
             },
             '&.Mui-active': {
-              color: 'green', // 현재 활성화 스텝 아이콘 
+              color: 'PRIMary', // 현재 활성화 스텝 아이콘 
             },
           },
         },

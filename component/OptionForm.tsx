@@ -292,7 +292,7 @@ const OptionForm = ({
                     {'개인정보 수집 및 이용에 대한 동의'}
                 </Typography>
                 <CheckCircleOutlineIcon
-                    color={isPolicyAccepted ? "success" : "action"}
+                    color={isPolicyAccepted ? "primary" : "action"}
                     sx={{
                         ml: 1,
                         fontSize: '1.2em',

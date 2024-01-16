@@ -276,7 +276,7 @@ export default function Checkout(props: parentsProps) {
                 )}
                 <Button
                   variant="contained"
-                  color='success'
+                  color='primary'
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
