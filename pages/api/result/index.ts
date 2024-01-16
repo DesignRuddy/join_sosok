@@ -55,27 +55,27 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                 targetRow.set('이름', req.body.name);
                 targetRow.set('전화번호', req.body.phone);
                 targetRow.set('이메일', req.body.email);
-                targetRow.set('참가호텔', req.body.type);
-                targetRow.set('기업명', req.body.companyRank);
+                targetRow.set('참가호텔', req.body.hotel);
+                targetRow.set('룸타입', req.body.roomType);
+                targetRow.set('기업명', req.body.companyName);
                 targetRow.set('가입경로', req.body.source);
                 targetRow.set('직책', req.body.position);
-                targetRow.set('소속', req.body.affiliation);
-                targetRow.set('지원', req.body.supporttype);
-                targetRow.set('선택옵션', req.body.detailType);
+                targetRow.set('소속', req.body.department);
+                targetRow.set('선택옵션', req.body.addOption);
                 targetRow.set('신청일자', new Date().toLocaleDateString('ko-KR')); // Example date format
                 await targetRow.save();
             } else {
                 await sheet.addRow({ 
                     '이름': req.body.name,
-                    '참가호텔': req.body.type,
                     '전화번호': req.body.phone, 
-                    '직책': req.body.position, 
                     '이메일': req.body.email,
-                    '기업명': req.body.companyRank,
+                    '참가호텔': req.body.hotel,
+                    '룸타입': req.body.roomType,
+                    '직책': req.body.position, 
+                    '기업명': req.body.companyName,
                     '가입경로': req.body.source,
-                    '소속': req.body.affiliation,
-                    '지원': req.body.supporttype,
-                    '선택옵션': req.body.detailType,
+                    '소속': req.body.department,
+                    '선택옵션': req.body.addOption,
                     '신청일자': new Date().toLocaleDateString('ko-KR') })
             }
 

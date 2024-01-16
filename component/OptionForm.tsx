@@ -20,20 +20,23 @@ type OptionFormProps = {
         companyName: string;
         department: string;
         position: string;
+        addOption: string;
     };
-    
+
     updateInfoData: (newData: {
         hotel?: string;
         roomType?: string;
         companyName?: string;
         position?: string;
         department?: string;
+        addOption?: string;
     }) => void;
     hotelRef: React.RefObject<HTMLSelectElement>;
     roomTypeRef: React.RefObject<HTMLSelectElement>;
     companyNameRef: React.RefObject<HTMLInputElement>;
     positionRef: React.RefObject<HTMLInputElement>;
     departmentRef: React.RefObject<HTMLInputElement>;
+    addOptionRef: React.RefObject<HTMLSelectElement>;
 };
 
 const OptionForm = ({
@@ -43,7 +46,8 @@ const OptionForm = ({
     roomTypeRef,
     companyNameRef,
     positionRef,
-    departmentRef
+    departmentRef,
+    addOptionRef
 }: OptionFormProps) => {
 
     type HotelInfo = {
@@ -81,6 +85,33 @@ const OptionForm = ({
                 '호텔C의 옵션 3 입니다.'
             ]
         },
+        '호텔D': {
+            image: '/images/testImage3.png',
+            price: '30000',
+            typeOptions: [
+                '호텔D의 옵션 1 입니다.',
+                '호텔D의 옵션 2 입니다.',
+                '호텔D의 옵션 3 입니다.'
+            ]
+        },
+        '호텔E': {
+            image: '/images/testImage3.png',
+            price: '30000',
+            typeOptions: [
+                '호텔E의 옵션 1 입니다.',
+                '호텔E의 옵션 2 입니다.',
+                '호텔E의 옵션 3 입니다.'
+            ]
+        },
+        '호텔F': {
+            image: '/images/testImage3.png',
+            price: '30000',
+            typeOptions: [
+                '호텔F의 옵션 1 입니다.',
+                '호텔F의 옵션 2 입니다.',
+                '호텔F의 옵션 3 입니다.'
+            ]
+        },
     }
 
     const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
@@ -109,10 +140,14 @@ const OptionForm = ({
         const selectedRoomType = event.target.value as string;
         updateInfoData({ roomType: selectedRoomType })
     }
+    const handleaddOptionChange = (event: SelectChangeEvent) => {
+        const selectedaddOption = event.target.value as string;
+        updateInfoData({ addOption: selectedaddOption })
+    }
 
     const handleFieldChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = (event.target as HTMLInputElement).value;
-        updateInfoData({ [field]:value });
+        updateInfoData({ [field]: value });
     };
 
     const handlePrivacyPolicyCheck = (status: any) => {
@@ -127,7 +162,7 @@ const OptionForm = ({
     }, [router.query.isAccepted]);
 
     console.log(infoData);
-    
+
     return (
         <>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
@@ -252,13 +287,14 @@ const OptionForm = ({
 
                 <Grid item xs={12} sx={{ mt: 5 }}>
                     <FormControl fullWidth>
-                        <InputLabel id="option-select-label">추가 옵션</InputLabel>
+                        <InputLabel id="addOption-select-label">추가 옵션</InputLabel>
                         <Select
-                            labelId="option-select-label"
-                            id="option"
+                            labelId="addOption-select-label"
+                            id="addOption"
                             label="추가 옵션"
-                        // value={infoData.option}
-                        // onChange={handleHotelChange}
+                            value={infoData.addOption}
+                            onChange={handleaddOptionChange}
+                            inputRef={addOptionRef}
                         >
                             <MenuItem value="option1">option1</MenuItem>
                             <MenuItem value="option2">option2</MenuItem>

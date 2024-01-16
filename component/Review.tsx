@@ -8,30 +8,28 @@ import { Divider } from '@mui/material';
 import { useFormContext } from '@/utills/FormContext';
 
 const products = [
-  {
-    name: '부산 온천장 호텔이름',
-    desc: '소속 혜택팩',
-    price: '320,000 ₩',
-  },
-  {
-    name: '부산 혁신관광 지원센터',
-    desc: '부산광역시',
-    price: '-150,000 ₩',
-  },
-  {
-    name: '소속 만능 패키지',
-    desc: 'sosok !',
-    price: '-50,000 ₩',
-  },
-  {
-    name: '부산 사상 아트홀 뮤지엄패스',
-    desc: '',
-    price: 'Free',
-  },
-  { name: '소속 누들패스', desc: '', price: 'Free' },
+  // {
+  //   name: '부산 온천장 선택한 호텔이름',
+  //   desc: '소속 X 부산 워케이션 ',
+  //   price: '320,000 ₩',
+  // },
+  // {
+  //   name: '부산광역시',
+  //   desc: '',
+  //   price: '-119,000 ₩',
+  // },
+  // {
+  //   name: '부산 혁신관광 지원센터',
+  //   desc: '부산광역시',
+  //   price: '-150,000 ₩',
+  // },
+
+  { name: '아트홀 뮤지엄패스', desc: '', price: '기본제공혜택' },
+  { name: '시티투어 패스', desc: '', price: '추가 옵션혜택' },
+  { name: '소속 온천패스', desc: '', price: '이벤트 추가혜택' }
 ];
 
-const addresses = ['블루프로그', '대외협력팀', '이사'];
+
 
 // const payments = [
 //   { name: 'Card type', detail: 'Visa' },
@@ -52,19 +50,43 @@ type ReviewProps = {
     companyName: string;
     department: string;
     position: string;
+    addOption: string;
   };
 }
 
 export default function Review({ formData, infoData }: ReviewProps) {
   // const { formData } = useFormContext();
 
-  const handleSubmit = async () => {
-    //로직 아직
-    const requestData = {
-      ...formData,
-      ...infoData,
-    }
+  let price;
+
+  switch (infoData.hotel) {
+
+    case '호텔A':
+      price = '50,000';
+      break;
+
+    case '호텔B':
+      price = '289,000';
+      break;
+    case '호텔C':
+      price = '390,000';
+      break;
+    case '호텔D':
+      price = '420,000';
+      break;
+    case '호텔E':
+      price = '50,000';
+      break;
+    case '호텔F':
+      price = '50,000';
+      break;
+    default:
+      price = '0';
   }
+
+  const addresses = [infoData.companyName, infoData.department, infoData.position]
+  console.log("reviewData", infoData);
+
 
   return (
     <React.Fragment>
@@ -72,17 +94,39 @@ export default function Review({ formData, infoData }: ReviewProps) {
         최종 신청정보
       </Typography>
       <List disablePadding>
+
+        <ListItem sx={{ py: 1, px: 0 }}>
+          <ListItemText primary={'부산 워케이션 호텔'} />
+          <Typography variant="body2">{infoData.hotel}</Typography>
+        </ListItem>
+
+        <ListItem sx={{ py: 1, px: 0 }}>
+          <ListItemText primary={'선택 호텔 룸타입'} />
+          <Typography variant="body2">{infoData.roomType}</Typography>
+        </ListItem>
+
+        <Divider sx={{ py: 1 }} />
+
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
+
         <Divider sx={{ py: 1 }} />
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="총 합계" />
+          <ListItemText primary="선택옵션 : " />
+          <Typography variant="subtitle1">
+            {infoData.addOption}
+          </Typography>
+        </ListItem>
+
+        <Divider sx={{ py: 1 }} />
+        <ListItem sx={{ py: 1, px: 0 }}>
+          <ListItemText primary="신청비용 : " />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            59,000 ₩
+            {price} 원
           </Typography>
         </ListItem>
       </List>

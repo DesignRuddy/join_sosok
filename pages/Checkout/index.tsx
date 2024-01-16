@@ -51,7 +51,8 @@ export default function Checkout(props: parentsProps) {
     roomType: '',
     companyName: '',
     position: '',
-    department: ''
+    department: '',
+    addOption: ''
   });
 
   const router = useRouter();
@@ -73,6 +74,7 @@ export default function Checkout(props: parentsProps) {
   const companyNameRef = useRef<HTMLInputElement>(null);
   const positionRef = useRef<HTMLInputElement>(null);
   const departmentRef = useRef<HTMLInputElement>(null);
+  const addOptionRef = useRef<HTMLSelectElement>(null);
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -104,7 +106,7 @@ export default function Checkout(props: parentsProps) {
         hotelRef.current?.focus();
       }
     } else if(activeStep === 2) {
-      handleSubmit;
+      handleSubmit();
     }
     setActiveStep(activeStep + 1);
   };
@@ -113,24 +115,16 @@ export default function Checkout(props: parentsProps) {
     setActiveStep(activeStep - 1);
   };
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    // event.preventDefault();
 
     const requestData = {
-      // name,
-      // type,
-      // position,
-      // companyRank,
-      // phone,
-      // email,
-      // detailType,
-      // source,
-      // affiliation,
-      // supporttype
+      ...formData,
+      ...infoData
     };
 
     try {
-      console.log(requestData);
+      console.log("본문데이터", requestData);
 
       const result = await fetch('/api/result', {
         method: 'POST',
@@ -204,6 +198,7 @@ export default function Checkout(props: parentsProps) {
           companyNameRef={companyNameRef}
           positionRef={positionRef}
           departmentRef={departmentRef}
+          addOptionRef={addOptionRef}
         />;
       case 2:
         return <Review 
