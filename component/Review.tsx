@@ -29,15 +29,6 @@ const products = [
   { name: '소속 온천패스', desc: '', price: '이벤트 추가혜택' }
 ];
 
-
-
-// const payments = [
-//   { name: 'Card type', detail: 'Visa' },
-//   { name: 'Card holder', detail: 'Mr John Smith' },
-//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-//   { name: 'Expiry date', detail: '04/2024' },
-// ];
-
 type ReviewProps = {
   formData: {
     name: string;
@@ -51,6 +42,8 @@ type ReviewProps = {
     department: string;
     position: string;
     addOption: string;
+    checkIn: string;
+    checkOut: string;
   };
 }
 

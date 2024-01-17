@@ -61,6 +61,8 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                 targetRow.set('가입경로', req.body.source);
                 targetRow.set('직책', req.body.position);
                 targetRow.set('소속', req.body.department);
+                targetRow.set('체크인', req.body.checkIn);
+                targetRow.set('체크아웃', req.body.checkOut);
                 targetRow.set('선택옵션', req.body.addOption);
                 targetRow.set('신청일자', new Date().toLocaleDateString('ko-KR')); // Example date format
                 await targetRow.save();
@@ -70,6 +72,8 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                     '전화번호': req.body.phone, 
                     '이메일': req.body.email,
                     '참가호텔': req.body.hotel,
+                    '체크인': req.body.checkIn,
+                    '체크아웃': req.body.checkOut,
                     '룸타입': req.body.roomType,
                     '직책': req.body.position, 
                     '기업명': req.body.companyName,

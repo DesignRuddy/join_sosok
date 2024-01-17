@@ -52,17 +52,19 @@ export default function Checkout(props: parentsProps) {
     companyName: '',
     position: '',
     department: '',
-    addOption: ''
+    addOption: '',
+    checkIn: '',
+    checkOut: ''
   });
 
   const router = useRouter();
 
-  const updateFormData = (newData: { name?: string; phone?: string; email?: string; hotel?: string; roomType?:string; companyName?:string; position?: string; department?:string }) => {
+  const updateFormData = (newData: { name?: string; phone?: string; email?: string;}) => {
     setFormData({ ...formData, ...newData });
     // setInfoData({...infoData, ...newData })
   };
-  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?:string; position?:string; department?:string;}) => {
-    setInfoData({...infoData, ...newData })
+  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string;}) => {
+    setInfoData({ ...infoData, ...newData })
   }
 
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -75,6 +77,8 @@ export default function Checkout(props: parentsProps) {
   const positionRef = useRef<HTMLInputElement>(null);
   const departmentRef = useRef<HTMLInputElement>(null);
   const addOptionRef = useRef<HTMLSelectElement>(null);
+  const checkInRef = useRef<HTMLInputElement>(null);
+  const checkOutRef = useRef<HTMLInputElement>(null);
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -98,14 +102,14 @@ export default function Checkout(props: parentsProps) {
         emailInputRef.current?.focus();
         return; // 여기서 함수 실행을 중단합니다.
       }
-    }else if(activeStep === 1) {
+    } else if (activeStep === 1) {
 
       // 호텔 선택이 되지않은경우
       if (!infoData.hotel) {
         alert("호텔 선택은 필수 입력항목입니다.")
         hotelRef.current?.focus();
       }
-    } else if(activeStep === 2) {
+    } else if (activeStep === 2) {
       handleSubmit();
     }
     setActiveStep(activeStep + 1);
@@ -117,11 +121,37 @@ export default function Checkout(props: parentsProps) {
 
   const handleSubmit = async () => {
     // event.preventDefault();
-
     const requestData = {
       ...formData,
       ...infoData
     };
+
+    let price
+
+  switch (requestData.hotel) {
+
+    case '호텔A':
+      price = '50,000';
+      break;
+
+    case '호텔B':
+      price = '289,000';
+      break;
+    case '호텔C':
+      price = '390,000';
+      break;
+    case '호텔D':
+      price = '420,000';
+      break;
+    case '호텔E':
+      price = '50,000';
+      break;
+    case '호텔F':
+      price = '50,000';
+      break;
+    default:
+      price = '0';
+  }
 
     try {
       console.log("본문데이터", requestData);
@@ -135,15 +165,54 @@ export default function Checkout(props: parentsProps) {
 
       if (result.ok) {
         console.log('Data sent successfully', resultBody);
-        alert('데이터 전송되었습니다.');
+        alert('부산 온청장 워케이션 신청이 완료되었습니다.');
+        const recipientPhone = requestData.phone.replace(/-/g, '');
+
+        const messageContent = `
+일에서 쉼표로, 워케이션 부산 운영팀 입니다.
+${requestData.name}님 신청해주신 
+예약이 승인 되었습니다.
+[ 입금계좌 ]
+ 예금주 : 청개구리(이준석) 
+ 계좌번호 : 3333-16-9761252
+은행명 : 카카오뱅크
+
+고객님의 워케이션 신청 비용은
+${price} 원 입니다.
+ 
+신청 후 3일 이내 미입금 시 자동으로 취소 처리되오니
+,이점 유의하시길 바랍니다.
+ 
+추후 개인적인 문제로 인해 예약 취소를 하시게 될 경우
+취소 사유를 적어 보내주시면 감사하겠습니다.
+[취소 수수료 안내] : 입실 7일전 취소 불가 
+예약 취소에 대한 세부 사항은 홈페이지 참조 부탁드립니다.
+[고객센터] 
+운영시간 : [월~금] 09:00 ~ 18:00 
+카카오톡 ch : 워케이션 부산 
+유선상담 : 032-715-5633
+`;
+
+        if (recipientPhone) {
+          
+          const smsResponse = await fetch('/api/sendlms', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ recipientPhone: recipientPhone, messageContent: messageContent })
+          });
+
+          const smsResponseBody = await smsResponse.json();
+          if (smsResponse.ok) {
+            console.log('문자가 정상적으로 전송되었습니다.', smsResponseBody);
+          } else {
+            console.log('문자가 전송중 오류로 인해 실패했습니다.', smsResponseBody);
+          }
+        }
       } else {
         console.error((403), 'Failed to send data', result.status, resultBody);
         alert('데이터 전송에 실패했습니다.');
       }
-      console.log('Full response:', resultBody);
-
       window.location.reload();
-
     } catch (e) {
       console.log(e);
       alert('오류가 발생했습니다.');
@@ -156,26 +225,6 @@ export default function Checkout(props: parentsProps) {
       router.replace(router.pathname)
     }
   })
-
-  const sendLms = async (data: any) => {
-    try {
-      const response = await fetch('/api/sendlms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Failed to send LMS:', error);
-    }
-  };
 
   const steps = ['신청정보', '옵션선택', '제출'];
 
@@ -199,9 +248,11 @@ export default function Checkout(props: parentsProps) {
           positionRef={positionRef}
           departmentRef={departmentRef}
           addOptionRef={addOptionRef}
+          checkInRef={checkInRef}
+          checkOutRef={checkOutRef}
         />;
       case 2:
-        return <Review 
+        return <Review
           infoData={infoData}
           formData={formData}
         />;

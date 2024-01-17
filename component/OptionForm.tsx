@@ -21,6 +21,8 @@ type OptionFormProps = {
         department: string;
         position: string;
         addOption: string;
+        checkIn: string;
+        checkOut: string;
     };
 
     updateInfoData: (newData: {
@@ -30,6 +32,8 @@ type OptionFormProps = {
         position?: string;
         department?: string;
         addOption?: string;
+        checkIn?: string;
+        checkOut?: string;
     }) => void;
     hotelRef: React.RefObject<HTMLSelectElement>;
     roomTypeRef: React.RefObject<HTMLSelectElement>;
@@ -37,6 +41,8 @@ type OptionFormProps = {
     positionRef: React.RefObject<HTMLInputElement>;
     departmentRef: React.RefObject<HTMLInputElement>;
     addOptionRef: React.RefObject<HTMLSelectElement>;
+    checkInRef?: React.RefObject<HTMLInputElement>;
+    checkOutRef?: React.RefObject<HTMLInputElement>;
 };
 
 const OptionForm = ({
@@ -47,7 +53,9 @@ const OptionForm = ({
     companyNameRef,
     positionRef,
     departmentRef,
-    addOptionRef
+    addOptionRef,
+    checkInRef,
+    checkOutRef
 }: OptionFormProps) => {
 
     type HotelInfo = {
@@ -145,8 +153,25 @@ const OptionForm = ({
         updateInfoData({ addOption: selectedaddOption })
     }
 
-    const handleFieldChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = (event.target as HTMLInputElement).value;
+    const handleFieldChange = (field: string) => (event: any) => {
+        let value;
+
+        if (field === 'checkIn' || field === 'checkOut') {
+
+            // const date = new Date(event);
+
+            // value = date.toISOString().split('T')[0];
+            // console.log(value);
+            const date = event;
+
+            if (date.isValid()) { // moment 객체가 유효한 날짜인지 확인
+                value = date.format('YYYY-MM-DD'); // ISO 형식의 날짜 문자열로 변환
+            }
+            console.log(value);
+            
+        } else {
+            value = event.target.value;
+        }
         updateInfoData({ [field]: value });
     };
 
@@ -161,7 +186,7 @@ const OptionForm = ({
         }
     }, [router.query.isAccepted]);
 
-    console.log(infoData);
+    // console.log(infoData);
 
     return (
         <>
@@ -211,11 +236,21 @@ const OptionForm = ({
                         selected={selectedDate}
                         onChange={(date:any) => setSelectedDate(date)}
                     /> */}
-                    <DatePicker label="Check In" />
+                    <DatePicker
+                        label="Check In"
+                        value={infoData.checkIn}
+                        onChange={handleFieldChange('checkIn')}
+                        inputRef={checkInRef}
+                    />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                    <DatePicker label="Check Out" />
+                    <DatePicker
+                        label="Check Out"
+                        value={infoData.checkOut}
+                        onChange={handleFieldChange('checkOut')}
+                        inputRef={checkOutRef}
+                    />
                 </Grid>
 
                 {selectedHotelInfo && (
@@ -228,6 +263,7 @@ const OptionForm = ({
                                 label="Room Type"
                                 value={infoData.roomType}
                                 onChange={handleRoomTypeChange}
+                                inputRef={roomTypeRef}
                             >
                                 {typeOptions.map((typeOption, index) => (
                                     <MenuItem key={index} value={typeOption}>{typeOption}</MenuItem>
