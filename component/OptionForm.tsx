@@ -5,12 +5,13 @@ import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
 // import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useRouter } from 'next/router';
 import { Autocomplete, Divider, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import Image from 'next/image';
+import { Image } from '@mui/icons-material';
+// import Image from 'next/image';
 // import { now } from '@/utills/formatDateISO';
 
 type OptionFormProps = {
@@ -122,11 +123,10 @@ const OptionForm = ({
         },
     }
 
-    const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
+
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
     const [selectedHotelInfo, setSelectedHotelInfo] = useState<{ image: string; price: string; } | null>(null);
     const [typeOptions, setTypeOptions] = useState<string[]>([]);
-    const [isHovered, setIsHovered] = useState(false);
     const router = useRouter();
 
     const handleHotelChange = (event: SelectChangeEvent) => {
@@ -168,25 +168,12 @@ const OptionForm = ({
                 value = date.format('YYYY-MM-DD'); // ISO 형식의 날짜 문자열로 변환
             }
             console.log(value);
-            
+
         } else {
             value = event.target.value;
         }
         updateInfoData({ [field]: value });
     };
-
-    const handlePrivacyPolicyCheck = (status: any) => {
-        router.push(`/PrivacyPolicy`);
-    };
-
-    useEffect(() => {
-        // URL 쿼리에서 isAccepted 값을 읽어옵니다.
-        if (router.query.isAccepted) {
-            setIsPolicyAccepted(router.query.isAccepted === 'true');
-        }
-    }, [router.query.isAccepted]);
-
-    // console.log(infoData);
 
     return (
         <>
@@ -221,9 +208,14 @@ const OptionForm = ({
                 </Grid>
 
                 {selectedHotelInfo && (
-                    <Grid item xs={12} sx={{ my: 3, border: "1px" }}>
-                        <Image src={selectedHotelInfo.image} alt='호텔 대표이미지' width="500" height="350" />
-                        <Typography align='center' sx={{ my: 2 }}>2인기준 : {selectedHotelInfo.price}</Typography>
+                    <Grid item xs={12} sx={{ my: 3, border: "1px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={selectedHotelInfo.image} alt='호텔 대표이미지' style={{ width: '80%', height: '90%' }} />
+                        <Typography variant='h6' align='center' sx={{ my: 2, display: 'flex', flexDirection: 'row' }}>2인기준 : &nbsp;
+                            <Typography variant='h5'>
+                                {selectedHotelInfo.price}
+                            </Typography>
+                            &nbsp; 원
+                        </Typography>
                     </Grid>
                 )}
 
@@ -241,6 +233,9 @@ const OptionForm = ({
                         value={infoData.checkIn}
                         onChange={handleFieldChange('checkIn')}
                         inputRef={checkInRef}
+                        sx={{
+                            width: "100%",
+                        }}
                     />
                 </Grid>
 
@@ -250,6 +245,9 @@ const OptionForm = ({
                         value={infoData.checkOut}
                         onChange={handleFieldChange('checkOut')}
                         inputRef={checkOutRef}
+                        sx={{
+                            width: "100%",
+                        }}
                     />
                 </Grid>
 
@@ -321,7 +319,7 @@ const OptionForm = ({
                     />
                 </Grid>
 
-                <Grid item xs={12} sx={{ mt: 5 }}>
+                <Grid item xs={12} sx={{ mt: 5, mb: 5 }}>
                     <FormControl fullWidth>
                         <InputLabel id="addOption-select-label">추가 옵션</InputLabel>
                         <Select
@@ -341,37 +339,7 @@ const OptionForm = ({
                 </Grid>
             </Grid>
 
-            <Divider sx={{ mt: 5, mb: 2 }} />
-
-            <Grid
-                item
-                xs={12}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={() => handlePrivacyPolicyCheck('A')}
-                sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            >
-                <Typography color={'green'}>
-                    [필수]
-                </Typography>
-                <Typography
-                    variant="body2"
-                    sx={{
-                        ml: 1,
-                        fontWeight: isHovered ? 'bold' : 'normal'
-                    }}
-                >
-                    {'개인정보 수집 및 이용에 대한 동의'}
-                </Typography>
-                <CheckCircleOutlineIcon
-                    color={isPolicyAccepted ? "primary" : "action"}
-                    sx={{
-                        ml: 1,
-                        fontSize: '1.2em',
-                        fontWeight: isHovered ? 'bold' : 'normal'
-                    }}
-                />
-            </Grid>
+            {/* <Divider sx={{ mt: 5, mb: 2 }} /> */}
         </>
     );
 }

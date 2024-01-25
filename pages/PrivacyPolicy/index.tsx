@@ -20,6 +20,7 @@ const PrivacyPolicy = () => {
     const handleAcceptanceChange = () => {
         setLoading(true);
         setIsAccepted(true);
+        localStorage.setItem('provider', 'o')
         handlegoBack(true);
     };
 

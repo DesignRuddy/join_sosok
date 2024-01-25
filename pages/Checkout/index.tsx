@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -40,10 +40,12 @@ type parentsProps = {
 export default function Checkout(props: parentsProps) {
   const { loading, setLoading } = props;
   const [activeStep, setActiveStep] = React.useState(0);
+  const [consent, setConsent] = useState('');
   const [formData, setFormData] = React.useState({
     name: '',
     phone: '',
-    email: ''
+    email: '',
+    consent: consent
   });
 
   const [infoData, setInfoData] = React.useState({
@@ -59,11 +61,11 @@ export default function Checkout(props: parentsProps) {
 
   const router = useRouter();
 
-  const updateFormData = (newData: { name?: string; phone?: string; email?: string;}) => {
+  const updateFormData = (newData: { name?: string; phone?: string; email?: string; consent?: string; }) => {
     setFormData({ ...formData, ...newData });
     // setInfoData({...infoData, ...newData })
   };
-  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string;}) => {
+  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string; }) => {
     setInfoData({ ...infoData, ...newData })
   }
 
@@ -82,6 +84,13 @@ export default function Checkout(props: parentsProps) {
 
   const handleNext = () => {
     if (activeStep === 0) {
+
+      if (localStorage.getItem('provider')) {
+        nameInputRef.current?.focus();
+      } else {
+        alert('개인정보제공동의는 필수항목입니다.');
+        router.push(`/PrivacyPolicy`);
+      }
 
       if (!formData.name) {
         alert('이름은 필수 항목입니다.');
@@ -121,37 +130,38 @@ export default function Checkout(props: parentsProps) {
 
   const handleSubmit = async () => {
     // event.preventDefault();
-    const requestData = {
-      ...formData,
-      ...infoData
-    };
+    // const requestData = {
+    //   ...formData,
+    //   ...infoData
+    // };
+    const requestData = Object.assign({}, formData, infoData);
 
     let price
 
-  switch (requestData.hotel) {
+    switch (requestData.hotel) {
 
-    case '호텔A':
-      price = '50,000';
-      break;
+      case '호텔A':
+        price = '50,000';
+        break;
 
-    case '호텔B':
-      price = '289,000';
-      break;
-    case '호텔C':
-      price = '390,000';
-      break;
-    case '호텔D':
-      price = '420,000';
-      break;
-    case '호텔E':
-      price = '50,000';
-      break;
-    case '호텔F':
-      price = '50,000';
-      break;
-    default:
-      price = '0';
-  }
+      case '호텔B':
+        price = '289,000';
+        break;
+      case '호텔C':
+        price = '390,000';
+        break;
+      case '호텔D':
+        price = '420,000';
+        break;
+      case '호텔E':
+        price = '50,000';
+        break;
+      case '호텔F':
+        price = '50,000';
+        break;
+      default:
+        price = '0';
+    }
 
     try {
       console.log("본문데이터", requestData);
@@ -164,54 +174,78 @@ export default function Checkout(props: parentsProps) {
       const resultBody = await result.json();
 
       if (result.ok) {
-        console.log('Data sent successfully', resultBody);
-        alert('부산 온청장 워케이션 신청이 완료되었습니다.');
-        const recipientPhone = requestData.phone.replace(/-/g, '');
-
-        const messageContent = `
-일에서 쉼표로, 워케이션 부산 운영팀 입니다.
-${requestData.name}님 신청해주신 
-예약이 승인 되었습니다.
-[ 입금계좌 ]
- 예금주 : 청개구리(이준석) 
- 계좌번호 : 3333-16-9761252
-은행명 : 카카오뱅크
-
-고객님의 워케이션 신청 비용은
-${price} 원 입니다.
- 
-신청 후 3일 이내 미입금 시 자동으로 취소 처리되오니
-,이점 유의하시길 바랍니다.
- 
-추후 개인적인 문제로 인해 예약 취소를 하시게 될 경우
-취소 사유를 적어 보내주시면 감사하겠습니다.
-[취소 수수료 안내] : 입실 7일전 취소 불가 
-예약 취소에 대한 세부 사항은 홈페이지 참조 부탁드립니다.
-[고객센터] 
-운영시간 : [월~금] 09:00 ~ 18:00 
-카카오톡 ch : 워케이션 부산 
-유선상담 : 032-715-5633
-`;
-
-        if (recipientPhone) {
-          
-          const smsResponse = await fetch('/api/sendlms', {
+        try {
+          const response = await fetch('/api/send-email', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ recipientPhone: recipientPhone, messageContent: messageContent })
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              requestData:requestData,
+              hotelName:requestData.hotel,
+              userEmail:requestData.email,
+              hotelType: requestData.roomType,
+              selectedOptions: requestData.addOption,
+            }),
           });
-
-          const smsResponseBody = await smsResponse.json();
-          if (smsResponse.ok) {
-            console.log('문자가 정상적으로 전송되었습니다.', smsResponseBody);
-          } else {
-            console.log('문자가 전송중 오류로 인해 실패했습니다.', smsResponseBody);
-          }
-        }
-      } else {
-        console.error((403), 'Failed to send data', result.status, resultBody);
-        alert('데이터 전송에 실패했습니다.');
+          const resEmail = await response.json();
+          console.log('success', resEmail);
+          
+     
+      } catch(error) {
+        console.error('Error sending email:', error);
       }
+    }
+
+      //       if (result.ok) {
+      //         console.log('Data sent successfully', resultBody);
+      //         alert('부산 온청장 워케이션 신청이 완료되었습니다.');
+      //         const recipientPhone = requestData.phone.replace(/-/g, '');
+
+      //         const messageContent = `일에서 쉼표로, 워케이션 부산 운영팀 입니다.
+      // ${requestData.name}님 신청해주신 
+      // 예약이 승인 되었습니다.
+      // [ 입금계좌 ]
+      //  예금주 : 청개구리(이준석) 
+      //  계좌번호 : 3333-16-9761252
+      // 은행명 : 카카오뱅크
+
+      // 고객님의 워케이션 신청 비용은
+      // ${price} 원 입니다.
+
+      // 신청 후 3일 이내 미입금 시 자동으로 취소 처리되오니
+      // ,이점 유의하시길 바랍니다.
+
+      // 추후 개인적인 문제로 인해 예약 취소를 하시게 될 경우
+      // 취소 사유를 적어 보내주시면 감사하겠습니다.
+      // [취소 수수료 안내] : 입실 7일전 취소 불가 
+      // 예약 취소에 대한 세부 사항은 홈페이지 참조 부탁드립니다.
+      // [고객센터] 
+      // 운영시간 : [월~금] 09:00 ~ 18:00 
+      // 카카오톡 ch : 워케이션 부산 
+      // 유선상담 : 032-715-5633
+      // `;
+
+      //         if (recipientPhone) {
+
+      //           const smsResponse = await fetch('/api/sendlms', {
+      //             method: 'POST',
+      //             headers: { 'Content-Type': 'application/json' },
+      //             body: JSON.stringify({ recipientPhone: recipientPhone, messageContent: messageContent })
+      //           });
+
+      //           const smsResponseBody = await smsResponse.json();
+      //           if (smsResponse.ok) {
+      //             console.log('문자가 정상적으로 전송되었습니다.', smsResponseBody);
+      //           } else {
+      //             console.log('문자가 전송중 오류로 인해 실패했습니다.', smsResponseBody);
+      //           }
+      //         }
+      //       } else {
+      //         console.error((403), 'Failed to send data', result.status, resultBody);
+      //         alert('데이터 전송에 실패했습니다.');
+      //       }
+
       window.location.reload();
     } catch (e) {
       console.log(e);
@@ -220,11 +254,21 @@ ${price} 원 입니다.
   };
 
   useEffect(() => {
-    if (router.query.isAccepted) {
-      setActiveStep(1);
-      router.replace(router.pathname)
+    // URL 쿼리에서 isAccepted 값을 읽어옵니다.
+    if (router.query.isAccepted === 'true') {
+      setConsent('o')
     }
-  })
+  }, [router.query.isAccepted]);
+
+  useEffect(() => {
+    if (router.query.isAccepted) {
+      setActiveStep(0);
+      // router.replace(router.pathname)
+    }
+  }, [router.query.isAccepted])
+
+  console.log("formaData", formData);
+
 
   const steps = ['신청정보', '옵션선택', '제출'];
 
@@ -283,7 +327,7 @@ ${price} 원 입니다.
           </Typography>
         </Toolbar>
       </AppBar> */}
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }} onSubmit={handleSubmit}>
+      <Container component="main" maxWidth="md" sx={{ mb: 4, mt: 30 }} onSubmit={handleSubmit}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h5" align="center">
             Workation 신청서

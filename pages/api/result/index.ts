@@ -60,6 +60,7 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                 targetRow.set('기업명', req.body.companyName);
                 targetRow.set('가입경로', req.body.source);
                 targetRow.set('직책', req.body.position);
+                targetRow.set('개인정보제공동의', req.body.consent);
                 targetRow.set('소속', req.body.department);
                 targetRow.set('체크인', req.body.checkIn);
                 targetRow.set('체크아웃', req.body.checkOut);
@@ -76,6 +77,7 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                     '체크아웃': req.body.checkOut,
                     '룸타입': req.body.roomType,
                     '직책': req.body.position, 
+                    '개인정보제공동의': req.body.consent,
                     '기업명': req.body.companyName,
                     '가입경로': req.body.source,
                     '소속': req.body.department,
