@@ -62,71 +62,123 @@ const OptionForm = ({
     type HotelInfo = {
         [key: string]: {
             image: string;
-            price: string;
-            typeOptions: string[];
+            price: number;
+            description: string;
+            typeOptions: { name: string; price: number; }[];
         }
     }
     const hotelsInfo: HotelInfo = {
-        '호텔A': {
-            image: '/images/testImage.png',
-            price: '10000',
+        '[HOTEL] 브라운도트': {
+            image: '/images/BROWNDOT HOTEL.jpg',
+            price: 50000,
+            description: `
+            취소수수료 \n
+                - 체크인 5일전 / 무료취소 / 호텔로 예약 확정 시
+                - 체크인 4일전 / 결제금액 90%의 환불 / 호텔로 예약 확정 시
+                - 체크인 3일전 / 결제금액 70%의 환불 / 호텔로 예약 확정 시
+                - 체크인 2일전 / 결제금액 50%의 환불 / 호텔로 예약 확정 시
+                - 체크인 1일전 / 환불 불가 / 호텔로 예약 확정 시
+            `,
             typeOptions: [
-                '호텔A의 옵션 1 입니다.',
-                '호텔A의 옵션 2 입니다.',
-                '호텔A의 옵션 3 입니다.'
+                { name: '-- 옵션을 선택해주세요.', price: 0 },
+                { name: '브라운도트 스탠다드', price: 50000 },
+                { name: '브라운도트 디럭스', price: 60000 },
+                { name: '브라운도트 테라스 디럭스', price: 70000 },
+                { name: '브라운도트 테라스 트윈', price: 880000 },
             ]
         },
-        '호텔B': {
-            image: '/images/testImage2.png',
-            price: '20000',
+        '[HOTEL] 그랜드베른': {
+            image: '/images/Grand Bern.jpg',
+            price: 50000,
+            description: `
+                
+            `,
             typeOptions: [
-                '호텔B의 옵션 1 입니다.',
-                '호텔B의 옵션 2 입니다.',
-                '호텔B의 옵션 3 입니다.'
+                { name: '-- 옵션을 선택해주세요.', price: 0 },
+                { name: '브라운도트 호텔의 옵션 1 입니다.', price: 15500 },
+                { name: '브라운도트 호텔의 옵션 2 입니다.', price: 20000 }
             ]
         },
-        '호텔C': {
-            image: '/images/testImage3.png',
-            price: '30000',
+        '[HOTEL] 크라운하버': {
+            image: '/images/CROWN HARBOR-1.jpg',
+            price: 50000,
+            description: `
+                
+            `,
             typeOptions: [
-                '호텔C의 옵션 1 입니다.',
-                '호텔C의 옵션 2 입니다.',
-                '호텔C의 옵션 3 입니다.'
+                { name: '-- 옵션을 선택해주세요.', price: 0 },
+                { name: '브라운도트 호텔의 옵션 1 입니다.', price: 15500 },
+                { name: '브라운도트 호텔의 옵션 2 입니다.', price: 20000 }
             ]
         },
-        '호텔D': {
-            image: '/images/testImage3.png',
-            price: '30000',
+        '[HOTEL] 스탠포드': {
+            image: '/images/STANFORD_HOTEL.jpg',
+            price: 50000,
+            description: `
+            제공옵션 \n
+                - Emoi : 조식, 중식, 석식 / 10% 할인 제공 / 할인권 1박당 1매 제공
+                - 엘리체크인 : 1시간 얼리체크인 무료 제공
+            취소수수료 \n
+                - 체크인 5일전 / 무료취소 / 호텔로 예약 확정 시
+                - 체크인 4일전 / 결제금액 90%의 환불 / 호텔로 예약 확정 시
+                - 체크인 3일전 / 결제금액 70%의 환불 / 호텔로 예약 확정 시
+                - 체크인 2일전 / 결제금액 50%의 환불 / 호텔로 예약 확정 시
+                - 체크인 1일전 / 환불 불가 / 호텔로 예약 확정 시
+            `,
             typeOptions: [
-                '호텔D의 옵션 1 입니다.',
-                '호텔D의 옵션 2 입니다.',
-                '호텔D의 옵션 3 입니다.'
+                { name: '-- 옵션을 선택해주세요.', price: 0 },
+                { name: '브라운도트 스탠다드(더블)', price: 180000 },
+                { name: '브라운도트 스탠다드(트윈)', price: 190000 }
             ]
         },
-        '호텔E': {
-            image: '/images/testImage3.png',
-            price: '30000',
+        '[HOTEL] 포레더스파': {
+            image: '/images/FORETHESPA.jpg',
+            price: 50000,
+            description: `
+            제공옵션 \n
+                - 카페 스탠포드 조식 : 13,000원 -> 11,000원에 할인요금 제공
+                - 카페 스탠포드 카페 : 1,000원 할인쿠폰 제공
+                - 무료 주차권 제공
+            취소수수료 \n
+                - 체크인 7일전 / 결제금액 30%의 수수료 / 호텔로 예약 확정 시
+                - 체크인 2일전 ~ 당일 / 100% 수수료 / 1박치 부과
+            `,
             typeOptions: [
-                '호텔E의 옵션 1 입니다.',
-                '호텔E의 옵션 2 입니다.',
-                '호텔E의 옵션 3 입니다.'
+                { name: '-- 옵션을 선택해주세요.', price: 0 },
+                { name: '포레더스파 스탠다드(더블)', price: 80000 },
+                { name: '포레더스파 디럭스(더블)', price: 110000 },
+                { name: '포레더스파 디럭스 패밀리(트윈)', price: 140000 },
+                { name: '포레더스파 디럭스 히노끼(더블)', price: 150000 },
+                { name: '포레더스파 디럭스 히노끼 패밀리(트윈)', price: 150000 },
             ]
         },
-        '호텔F': {
-            image: '/images/testImage3.png',
-            price: '30000',
+        '[HOTEL] 토요코인': {
+            image: '/images/TOYOKOINN.png',
+            price: 50000,
+            description: `
+            제공옵션 \n
+                - 2층 조식당 : 조식 무료 제공 / 숙박 시 무료제공
+                - 안마의자 : 2,000원(10분) 1회 무료 제공 / 숙박 시 할인제공
+            취소수수료 \n
+                - 체크인 7일전 / 결제금액 30%의 수수료 / 호텔로 예약 확정 시
+                - 체크인 1일전 / 결제금액 50%의 수수료 / 호텔로 예약 확정 시
+                - 체크인 당일 / 결제금액 100% / 호텔로 예약 확정 시
+            `,
             typeOptions: [
-                '호텔F의 옵션 1 입니다.',
-                '호텔F의 옵션 2 입니다.',
-                '호텔F의 옵션 3 입니다.'
+                { name: '-- 옵션을 선택해주세요.', price: 0 },
+                { name: '토요코인 싱글', price: 62000 },
+                { name: '토요코인 미니더블', price: 73000 },
+                { name: '토요코인 더블 / 트윈', price: 84000 },
+                { name: '토요코인 디럭스 더블', price: 97000 },
             ]
         },
     }
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-    const [selectedHotelInfo, setSelectedHotelInfo] = useState<{ image: string; price: string; } | null>(null);
-    const [typeOptions, setTypeOptions] = useState<string[]>([]);
+    const [selectedHotelInfo, setSelectedHotelInfo] = useState<{ image: string; price: number; description: string; } | null>(null);
+    const [typeOptions, setTypeOptions] = useState<{ name: string; price: number; }[]>([]);
+    const [selectedOption, setSelectedOption] = useState<{ name: string; price: number; } | null>(null);
     const router = useRouter();
 
     const handleHotelChange = (event: SelectChangeEvent) => {
@@ -144,8 +196,11 @@ const OptionForm = ({
     //         updateInfoData({ roomType: '' })
     //     }
     // }
+
     const handleRoomTypeChange = (event: SelectChangeEvent) => {
         const selectedRoomType = event.target.value as string;
+        const selectedOption = typeOptions.find(option => option.name === selectedRoomType);
+        setSelectedOption(selectedOption || null);
         updateInfoData({ roomType: selectedRoomType })
     }
     const handleaddOptionChange = (event: SelectChangeEvent) => {
@@ -175,6 +230,14 @@ const OptionForm = ({
         updateInfoData({ [field]: value });
     };
 
+    useEffect(() => {
+        if (typeOptions.length > 0) {
+            setSelectedOption(typeOptions[0]);
+        } else {
+            setSelectedOption(null);
+        }
+    }, [typeOptions])
+
     return (
         <>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
@@ -199,10 +262,6 @@ const OptionForm = ({
                                     {key}
                                 </MenuItem>
                             ))}
-                            {/* <MenuItem value="호텔A">호텔A</MenuItem>
-                            <MenuItem value="호텔B">호텔B</MenuItem>
-                            <MenuItem value="호텔C">호텔C</MenuItem> */}
-                            {/* 여기에 더 많은 호텔 옵션을 추가할 수 있습니다 */}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -210,12 +269,19 @@ const OptionForm = ({
                 {selectedHotelInfo && (
                     <Grid item xs={12} sx={{ my: 3, border: "1px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <img src={selectedHotelInfo.image} alt='호텔 대표이미지' style={{ width: '80%', height: '90%' }} />
-                        <Typography variant='h6' align='center' sx={{ my: 2, display: 'flex', flexDirection: 'row' }}>2인기준 : &nbsp;
+                        <Typography variant='h6' align='center' sx={{ mt: 6, mb: 2, display: 'flex', flexDirection: 'row' }}>2인기준 : &nbsp;
                             <Typography variant='h5'>
-                                {selectedHotelInfo.price}
+                                {selectedHotelInfo.price + (selectedOption ? selectedOption.price : 0)}
                             </Typography>
                             &nbsp; 원
                         </Typography>
+
+                        {selectedHotelInfo.description.split('\n').map((line, index) => (
+                            <React.Fragment key={index}>
+                                {line.includes('취소수수료') || line.includes('제공옵션') ? <b>{line}</b> : line}
+                                <br />
+                            </React.Fragment>
+                        ))}
                     </Grid>
                 )}
 
@@ -264,7 +330,7 @@ const OptionForm = ({
                                 inputRef={roomTypeRef}
                             >
                                 {typeOptions.map((typeOption, index) => (
-                                    <MenuItem key={index} value={typeOption}>{typeOption}</MenuItem>
+                                    <MenuItem key={index} value={typeOption.name}>{typeOption.name}</MenuItem>
                                 ))}
                                 {/* <MenuItem value="Type A">Type A</MenuItem>
                                 <MenuItem value="Type B">Type B</MenuItem>
