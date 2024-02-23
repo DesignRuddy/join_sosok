@@ -56,7 +56,8 @@ export default function Checkout(props: parentsProps) {
     department: '',
     addOption: '',
     checkIn: '',
-    checkOut: ''
+    checkOut: '',
+    optionPrice: 0
   });
 
   const router = useRouter();
@@ -65,7 +66,7 @@ export default function Checkout(props: parentsProps) {
     setFormData({ ...formData, ...newData });
     // setInfoData({...infoData, ...newData })
   };
-  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string; }) => {
+  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string; optionPrice?: number}) => {
     setInfoData({ ...infoData, ...newData })
   }
 

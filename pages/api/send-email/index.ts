@@ -52,9 +52,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             let targetRow = rows.find(row => !row.get('신청일자'));
 
             if (targetRow) {
-            const { requestData, hotelName, userEmail, hotelType, selectedOptions } = req.body;
+            const { requestData, hotelName, userEmail, hotelType, selectedOptions} = req.body;
 
             const name = requestData.name;
+            const roomType = requestData.roomType;
+            const checkIn = requestData.checkIn;
+            const checkOut = requestData.checkOut;
+            const position = requestData.position;
+            const companyName = requestData.companyName;
+            const optionPrice = requestData.optionPrice;
             // 이메일 전송을 위한 transporter 설정
             const transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
@@ -69,18 +75,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             const info = await transporter.sendMail({
                 from: process.env.EMAIL_FROM,
-                to: process.env.EMAIL_TO,
-                subject: "부산 온천장 신청정보입니다.",
-                text: `안녕하세요. sosok 워케이션 담당자 "김도영" 입니다.
-                
-                [신청정보]
+                to: userEmail,
+                subject: "부산 온천장 워케이션 x 'sosok' 온천패스 신청결과",
+                text: `${companyName} | ${name}${position}님 안녕하세요 
+먼저 앞서 워케이션 신청에 감사드리고 더 나은 서비스를 위해 노력하겠습니다.
+${name}님의 신청정보는 아래와 같습니다.
+
+                [ 신청정보 ]
                 신청자 : ${name} 님
-                신청한 호텔 : ${hotelName}
-                호텔 타입 : ${hotelType}
-                
-                추가 선택옵션 : ${selectedOptions} 입니다.
-                최종가격 회신 부탁드립니다.
-                `,
+                신청 호텔 : ${hotelName}
+                호텔 : ${hotelType}
+                룸 타입 : ${roomType}  
+                추가 선택옵션 : ${selectedOptions}
+                신청 비용 : ${optionPrice}
+
+고객님이 신청하신 해당호텔의 체크인,아웃 시간은 
+${checkIn} ~ ${checkOut}입니다.
+
+부산 온천장워케이션 운영팀
+[ 고객센터 ] 
+TEL    : 032-715-5633
+E-MAIL : contact@bluefrog.co.kr
+Kakao  : 'sosok'
+인천광역시 연수구 송도과학로 70, 업무동 1307~8호
+(송도동, 송도 AT 센터)
+`,
             });
         }
 
