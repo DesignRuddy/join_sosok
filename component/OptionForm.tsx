@@ -24,6 +24,7 @@ type OptionFormProps = {
         addOption: string;
         checkIn: string;
         checkOut: string;
+        optionPrice: number;
     };
 
     updateInfoData: (newData: {
@@ -35,6 +36,7 @@ type OptionFormProps = {
         addOption?: string;
         checkIn?: string;
         checkOut?: string;
+        optionPrice?: number;
     }) => void;
     hotelRef: React.RefObject<HTMLSelectElement>;
     roomTypeRef: React.RefObject<HTMLSelectElement>;
@@ -203,6 +205,11 @@ const OptionForm = ({
         setSelectedOption(selectedOption || null);
         updateInfoData({ roomType: selectedRoomType })
     }
+
+    const handleOptionChange = (selectedOptionPrice: number) => {
+        updateInfoData({ ...infoData, optionPrice: selectedOptionPrice });
+    }
+
     const handleaddOptionChange = (event: SelectChangeEvent) => {
         const selectedaddOption = event.target.value as string;
         updateInfoData({ addOption: selectedaddOption })
@@ -238,6 +245,13 @@ const OptionForm = ({
         }
     }, [typeOptions])
 
+    useEffect(() => {
+        if (selectedHotelInfo && selectedOption) {
+            const newTotalPrice = selectedHotelInfo.price + selectedOption.price;
+            updateInfoData({ ...infoData, optionPrice: newTotalPrice });
+        }
+    }, [selectedHotelInfo, selectedOption]);
+
     return (
         <>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
@@ -270,16 +284,25 @@ const OptionForm = ({
                     <Grid item xs={12} sx={{ my: 3, border: "1px", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <img src={selectedHotelInfo.image} alt='호텔 대표이미지' style={{ width: '80%', height: '90%' }} />
                         <Typography variant='h6' align='center' sx={{ mt: 6, mb: 2, display: 'flex', flexDirection: 'row' }}>2인기준 : &nbsp;
-                            <Typography variant='h5'>
-                                {selectedHotelInfo.price + (selectedOption ? selectedOption.price : 0)}
+                            <Typography variant='h5' fontWeight={700}>
+                                {(selectedHotelInfo.price + (selectedOption ? selectedOption.price : 0)).toLocaleString()}
                             </Typography>
                             &nbsp; 원
                         </Typography>
 
                         {selectedHotelInfo.description.split('\n').map((line, index) => (
                             <React.Fragment key={index}>
-                                {line.includes('취소수수료') || line.includes('제공옵션') ? <b>{line}</b> : line}
-                                <br />
+                                {line.includes('취소수수료') || line.includes('제공옵션') ? (
+                                    <Typography component="span" variant="body1" sx={{ fontWeight: 'bold', lineHeight: '1.2', display: 'block' }}>
+                                        {line}
+                                    </Typography>
+                                ) : (
+                                    <Typography component="span" variant="body1" sx={{mb: 1,  lineHeight: '1.2', display: 'block', textAlign: 'left' }}>
+                                        {line}
+                                    </Typography>
+                                )
+                                }
+                                {/* <br /> */}
                             </React.Fragment>
                         ))}
                     </Grid>

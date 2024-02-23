@@ -8,22 +8,6 @@ import { Divider } from '@mui/material';
 import { useFormContext } from '@/utills/FormContext';
 
 const products = [
-  // {
-  //   name: '부산 온천장 선택한 호텔이름',
-  //   desc: '소속 X 부산 워케이션 ',
-  //   price: '320,000 ₩',
-  // },
-  // {
-  //   name: '부산광역시',
-  //   desc: '',
-  //   price: '-119,000 ₩',
-  // },
-  // {
-  //   name: '부산 혁신관광 지원센터',
-  //   desc: '부산광역시',
-  //   price: '-150,000 ₩',
-  // },
-
   { name: '아트홀 뮤지엄패스', desc: '', price: '기본제공혜택' },
   { name: '시티투어 패스', desc: '', price: '추가 옵션혜택' },
   { name: '소속 온천패스', desc: '', price: '이벤트 추가혜택' }
@@ -44,6 +28,7 @@ type ReviewProps = {
     addOption: string;
     checkIn: string;
     checkOut: string;
+    optionPrice: number;
   };
 }
 
@@ -54,24 +39,24 @@ export default function Review({ formData, infoData }: ReviewProps) {
 
   switch (infoData.hotel) {
 
-    case '호텔A':
-      price = '50,000';
+    case '[HOTEL] 브라운도트':
+      price = infoData.optionPrice;
       break;
 
-    case '호텔B':
-      price = '289,000';
+    case '[HOTEL] 그랜드베른':
+      price = infoData.optionPrice;
       break;
-    case '호텔C':
-      price = '390,000';
+    case '[HOTEL] 크라운하버':
+      price = infoData.optionPrice;
       break;
-    case '호텔D':
-      price = '420,000';
+    case '[HOTEL] 스탠포드':
+      price = infoData.optionPrice;
       break;
-    case '호텔E':
-      price = '50,000';
+    case '[HOTEL] 포레더스파':
+      price = infoData.optionPrice;
       break;
-    case '호텔F':
-      price = '50,000';
+    case '[HOTEL] 토요코인':
+      price = infoData.optionPrice;
       break;
     default:
       price = '0';
@@ -90,12 +75,12 @@ export default function Review({ formData, infoData }: ReviewProps) {
 
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary={'부산 워케이션 호텔'} />
-          <Typography variant="body2">{infoData.hotel}</Typography>
+          <Typography variant="h6" fontWeight={900}>{infoData.hotel}</Typography>
         </ListItem>
 
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary={'선택 호텔 룸타입'} />
-          <Typography variant="body2">{infoData.roomType}</Typography>
+          <Typography variant="body2" fontWeight={700}>{infoData.roomType}</Typography>
         </ListItem>
 
         <Divider sx={{ py: 1 }} />
@@ -103,23 +88,23 @@ export default function Review({ formData, infoData }: ReviewProps) {
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2" fontWeight={700}>{product.price}</Typography>
           </ListItem>
         ))}
 
         <Divider sx={{ py: 1 }} />
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="선택옵션 : " />
+          <ListItemText primary="선택 추가옵션 : " />
           <Typography variant="subtitle1">
             {infoData.addOption}
           </Typography>
         </ListItem>
 
         <Divider sx={{ py: 1 }} />
-        <ListItem sx={{ py: 1, px: 0 }}>
+        <ListItem sx={{ pt: 2, px: 0 }}>
           <ListItemText primary="신청비용 : " />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            {price} 원
+          <Typography variant="h5" sx={{ fontWeight: 600 }}>
+            {price.toLocaleString()} 원
           </Typography>
         </ListItem>
       </List>
@@ -137,12 +122,14 @@ export default function Review({ formData, infoData }: ReviewProps) {
         </Grid>
 
         {/* 하단 우측 정보 */}
-        {/* <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
+        <Grid item container direction="column" xs={12} sm={6}>
+          <Typography variant="body2" gutterBottom sx={{ mt: 2 }}>
+            ※워케이션 신청 상세내용입니다.<br />
+              신청 이후 담당자와 상의후 결제가 진행됩니다.
+              
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
+            {/* {payments.map((payment) => (
               <React.Fragment key={payment.name}>
                 <Grid item xs={6}>
                   <Typography gutterBottom>{payment.name}</Typography>
@@ -151,9 +138,9 @@ export default function Review({ formData, infoData }: ReviewProps) {
                   <Typography gutterBottom>{payment.detail}</Typography>
                 </Grid>
               </React.Fragment>
-            ))}
+            ))} */}
           </Grid>
-        </Grid> */}
+        </Grid>
       </Grid>
     </React.Fragment>
   );

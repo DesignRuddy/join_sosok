@@ -65,6 +65,7 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                 targetRow.set('체크인', req.body.checkIn);
                 targetRow.set('체크아웃', req.body.checkOut);
                 targetRow.set('선택옵션', req.body.addOption);
+                targetRow.set('신청비용', req.body.optionPrice);
                 targetRow.set('신청일자', new Date().toLocaleDateString('ko-KR')); // Example date format
                 await targetRow.save();
             } else {
@@ -82,6 +83,7 @@ export default async function googlesheet(req: NextApiRequest, res: NextApiRespo
                     '가입경로': req.body.source,
                     '소속': req.body.department,
                     '선택옵션': req.body.addOption,
+                    '신청비용': req.body.optionPrice,
                     '신청일자': new Date().toLocaleDateString('ko-KR') })
             }
 
