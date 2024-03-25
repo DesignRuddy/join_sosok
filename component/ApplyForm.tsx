@@ -97,7 +97,7 @@ const ApplyForm = () => {
         };
 
         try {
-            console.log(requestData);
+            // console.log(requestData);
 
             const result = await fetch('/api/result', {
                 method: 'POST',
@@ -107,19 +107,19 @@ const ApplyForm = () => {
             const resultBody = await result.json();
 
             if (result.ok) {
-                console.log('Data sent successfully', resultBody);
+                // console.log('Data sent successfully', resultBody);
                 alert('데이터 전송되었습니다.');
             } else {
-                console.error((403), 'Failed to send data', result.status, resultBody);
+                // console.error((403), 'Failed to send data', result.status, resultBody);
                 alert('데이터 전송에 실패했습니다.');
             }
-            console.log('Full response:', resultBody);
+            // console.log('Full response:', resultBody);
 
             window.location.reload();
 
         } catch (e) {
-            console.log(e);
-            alert('오류가 발생했습니다.');
+            // console.log(e);
+            alert('오류가 발생했습니다. 고객센터로 문의 바랍니다.');
         }
     };
 

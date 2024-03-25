@@ -63,7 +63,7 @@ export default function Review({ formData, infoData }: ReviewProps) {
   }
 
   const addresses = [infoData.companyName, infoData.department, infoData.position]
-  console.log("reviewData", infoData);
+  // console.log("reviewData", infoData);
 
 
   return (

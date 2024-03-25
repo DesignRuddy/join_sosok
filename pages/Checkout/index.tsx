@@ -165,7 +165,7 @@ export default function Checkout(props: parentsProps) {
     }
 
     try {
-      console.log("본문데이터", requestData);
+      // console.log("본문데이터", requestData);
 
       const result = await fetch('/api/result', {
         method: 'POST',
@@ -175,7 +175,7 @@ export default function Checkout(props: parentsProps) {
         body: JSON.stringify(requestData),
       })
       const resultBody = await result.json();
-      console.log("resultBody", resultBody);
+      // console.log("resultBody", resultBody);
       
 
       if (result.ok) {
@@ -194,7 +194,7 @@ export default function Checkout(props: parentsProps) {
             }),
           });
           const resEmail = await response.json();
-          console.log('success', resEmail);
+          // console.log('success', resEmail);
 
 
         } catch (error) {
@@ -253,7 +253,7 @@ export default function Checkout(props: parentsProps) {
 
       window.location.reload();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       alert('오류가 발생했습니다.');
     }
   };
@@ -272,7 +272,7 @@ export default function Checkout(props: parentsProps) {
     }
   }, [router.query.isAccepted])
 
-  console.log("formaData", formData);
+  // console.log("formaData", formData);
 
 
   const steps = ['신청정보', '옵션선택', '제출'];

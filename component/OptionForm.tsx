@@ -195,7 +195,7 @@ const OptionForm = ({
             if (date.isValid()) { // moment 객체가 유효한 날짜인지 확인
                 value = date.format('YYYY-MM-DD'); // ISO 형식의 날짜 문자열로 변환
             }
-            console.log(value);
+            // console.log(value);
 
         } else {
             value = event.target.value;
