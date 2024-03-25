@@ -29,7 +29,7 @@ const ApplyForm = () => {
     const [detailType, setDetailType] = useState('');
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
-    const [source, setSource] = useState('');
+    // const [source, setSource] = useState('');
     const [affiliation, setAffiliation] = useState('');
     const [supporttype, setSupporttype] = useState('');
 
@@ -67,9 +67,9 @@ const ApplyForm = () => {
         setCheckOutDate(event);
     };
 
-    const handleSourceChange = (event: any) => {
-        setSource(event.target.value);
-    };
+    // const handleSourceChange = (event: any) => {
+    //     setSource(event.target.value);
+    // };
 
     const handlePhoneChange = (event: any) => {
         setPhone(event.target.value);
@@ -91,7 +91,7 @@ const ApplyForm = () => {
             phone,
             email,
             detailType,
-            source,
+            // source,
             affiliation,
             supporttype
         };
@@ -180,7 +180,7 @@ const ApplyForm = () => {
                         renderInput={(params: any) => <TextField {...params} fullWidth margin="normal" />}
                     /> */}
 
-                    <FormControl fullWidth margin="normal">
+                    {/* <FormControl fullWidth margin="normal">
                         <InputLabel id="source-select-label">가입경로</InputLabel>
                         <Select
                             labelId="source-select-label"
@@ -192,9 +192,8 @@ const ApplyForm = () => {
                             <MenuItem value="인터넷 검색">인터넷 검색</MenuItem>
                             <MenuItem value="소셜 미디어">소셜 미디어</MenuItem>
                             <MenuItem value="추천">추천</MenuItem>
-                            {/* 추가적인 옵션을 여기에 추가할 수 있습니다. */}
                         </Select>
-                    </FormControl>
+                    </FormControl> */}
 
                     <Divider sx={{ marginY: 3 }} />
 
