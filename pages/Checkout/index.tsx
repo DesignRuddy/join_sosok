@@ -296,7 +296,7 @@ export default function Checkout(props: parentsProps) {
           companyNameRef={companyNameRef}
           positionRef={positionRef}
           departmentRef={departmentRef}
-          addOptionRef={addOptionRef}
+          // addOptionRef={addOptionRef}
           checkInRef={checkInRef}
           checkOutRef={checkOutRef}
         />;

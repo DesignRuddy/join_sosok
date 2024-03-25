@@ -43,7 +43,7 @@ type OptionFormProps = {
     companyNameRef: React.RefObject<HTMLInputElement>;
     positionRef: React.RefObject<HTMLInputElement>;
     departmentRef: React.RefObject<HTMLInputElement>;
-    addOptionRef: React.RefObject<HTMLSelectElement>;
+    // addOptionRef: React.RefObject<HTMLSelectElement>;
     checkInRef?: React.RefObject<HTMLInputElement>;
     checkOutRef?: React.RefObject<HTMLInputElement>;
 };
@@ -56,7 +56,7 @@ const OptionForm = ({
     companyNameRef,
     positionRef,
     departmentRef,
-    addOptionRef,
+    // addOptionRef,
     checkInRef,
     checkOutRef
 }: OptionFormProps) => {
@@ -71,9 +71,11 @@ const OptionForm = ({
     }
     const hotelsInfo: HotelInfo = {
         '[HOTEL] 브라운도트': {
-            image: '/images/BROWNDOT HOTEL.jpg',
-            price: 50000,
+            image: '/images/BROWNDOT.jpg',
+            price: 0,
             description: `
+            2인기준으로 1인당 금액입니다.
+
             취소수수료 \n
                 - 체크인 5일전 / 무료취소 / 호텔로 예약 확정 시
                 - 체크인 4일전 / 결제금액 90%의 환불 / 호텔로 예약 확정 시
@@ -83,40 +85,18 @@ const OptionForm = ({
             `,
             typeOptions: [
                 { name: '-- 옵션을 선택해주세요.', price: 0 },
-                { name: '브라운도트 스탠다드', price: 50000 },
-                { name: '브라운도트 디럭스', price: 60000 },
-                { name: '브라운도트 테라스 디럭스', price: 70000 },
-                { name: '브라운도트 테라스 트윈', price: 880000 },
-            ]
-        },
-        '[HOTEL] 그랜드베른': {
-            image: '/images/Grand Bern.jpg',
-            price: 50000,
-            description: `
-                
-            `,
-            typeOptions: [
-                { name: '-- 옵션을 선택해주세요.', price: 0 },
-                { name: '브라운도트 호텔의 옵션 1 입니다.', price: 15500 },
-                { name: '브라운도트 호텔의 옵션 2 입니다.', price: 20000 }
-            ]
-        },
-        '[HOTEL] 크라운하버': {
-            image: '/images/CROWN HARBOR-1.jpg',
-            price: 50000,
-            description: `
-                
-            `,
-            typeOptions: [
-                { name: '-- 옵션을 선택해주세요.', price: 0 },
-                { name: '브라운도트 호텔의 옵션 1 입니다.', price: 15500 },
-                { name: '브라운도트 호텔의 옵션 2 입니다.', price: 20000 }
+                // { name: '브라운도트 스탠다드', price: 50000 },
+                { name: '브라운도트 디럭스', price: 68000 },
+                // { name: '브라운도트 테라스 디럭스', price: 70000 },
+                { name: '브라운도트 테라스 트윈', price: 122000 },
             ]
         },
         '[HOTEL] 스탠포드': {
             image: '/images/STANFORD_HOTEL.jpg',
-            price: 50000,
+            price: 0,
             description: `
+            2인기준으로 1인당 금액입니다.
+
             제공옵션 \n
                 - Emoi : 조식, 중식, 석식 / 10% 할인 제공 / 할인권 1박당 1매 제공
                 - 엘리체크인 : 1시간 얼리체크인 무료 제공
@@ -129,14 +109,16 @@ const OptionForm = ({
             `,
             typeOptions: [
                 { name: '-- 옵션을 선택해주세요.', price: 0 },
-                { name: '브라운도트 스탠다드(더블)', price: 180000 },
-                { name: '브라운도트 스탠다드(트윈)', price: 190000 }
+                { name: '브라운도트 스탠다드(더블)', price: 74000 },
+                { name: '브라운도트 스탠다드(트윈)', price: 96000 }
             ]
         },
         '[HOTEL] 포레더스파': {
-            image: '/images/FORETHESPA.jpg',
-            price: 50000,
+            image: '/images/FORETTHESPA.png',
+            price: 0,
             description: `
+            2인기준으로 1인당 금액입니다.
+
             제공옵션 \n
                 - 카페 스탠포드 조식 : 13,000원 -> 11,000원에 할인요금 제공
                 - 카페 스탠포드 카페 : 1,000원 할인쿠폰 제공
@@ -147,17 +129,16 @@ const OptionForm = ({
             `,
             typeOptions: [
                 { name: '-- 옵션을 선택해주세요.', price: 0 },
-                { name: '포레더스파 스탠다드(더블)', price: 80000 },
-                { name: '포레더스파 디럭스(더블)', price: 110000 },
+                { name: '포레더스파 디럭스(더블)', price: 82000 },
                 { name: '포레더스파 디럭스 패밀리(트윈)', price: 140000 },
-                { name: '포레더스파 디럭스 히노끼(더블)', price: 150000 },
-                { name: '포레더스파 디럭스 히노끼 패밀리(트윈)', price: 150000 },
             ]
         },
         '[HOTEL] 토요코인': {
-            image: '/images/TOYOKOINN.png',
-            price: 50000,
+            image: '/images/TOYOKOINN.jpg',
+            price: 0,
             description: `
+            2인기준으로 1인당 금액입니다.
+
             제공옵션 \n
                 - 2층 조식당 : 조식 무료 제공 / 숙박 시 무료제공
                 - 안마의자 : 2,000원(10분) 1회 무료 제공 / 숙박 시 할인제공
@@ -168,10 +149,9 @@ const OptionForm = ({
             `,
             typeOptions: [
                 { name: '-- 옵션을 선택해주세요.', price: 0 },
-                { name: '토요코인 싱글', price: 62000 },
-                { name: '토요코인 미니더블', price: 73000 },
-                { name: '토요코인 더블 / 트윈', price: 84000 },
-                { name: '토요코인 디럭스 더블', price: 97000 },
+                { name: '토요코인 싱글', price: 76400 },
+                { name: '토요코인 더블', price: 67000 },
+                { name: '토요코인 트윈', price: 84800 },
             ]
         },
     }
@@ -189,15 +169,6 @@ const OptionForm = ({
         setSelectedHotelInfo(hotelsInfo[selectedHotel]);
         setTypeOptions(hotelsInfo[selectedHotel].typeOptions);
     };
-
-    // const handleTypeOPtion = (selectedHotel: string) => {
-    //     if(hotelsInfo[selectedHotel]) {
-    //         setTypeOptions(hotelsInfo[selectedHotel].typeOptions);
-    //     } else {
-    //         setTypeOptions([]);
-    //         updateInfoData({ roomType: '' })
-    //     }
-    // }
 
     const handleRoomTypeChange = (event: SelectChangeEvent) => {
         const selectedRoomType = event.target.value as string;
@@ -219,11 +190,6 @@ const OptionForm = ({
         let value;
 
         if (field === 'checkIn' || field === 'checkOut') {
-
-            // const date = new Date(event);
-
-            // value = date.toISOString().split('T')[0];
-            // console.log(value);
             const date = event;
 
             if (date.isValid()) { // moment 객체가 유효한 날짜인지 확인
@@ -309,14 +275,6 @@ const OptionForm = ({
                 )}
 
                 <Grid item xs={12} sm={6}>
-                    {/* <DatePicker
-                        dateFormat='yyyy.MM.dd' // 날짜 형태
-                        shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
-                        minDate={new Date('2000-01-01')} // minDate 이전 날짜 선택 불가
-                        maxDate={new Date()} // maxDate 이후 날짜 선택 불가
-                        selected={selectedDate}
-                        onChange={(date:any) => setSelectedDate(date)}
-                    /> */}
                     <DatePicker
                         label="Check In"
                         value={infoData.checkIn}
@@ -355,10 +313,6 @@ const OptionForm = ({
                                 {typeOptions.map((typeOption, index) => (
                                     <MenuItem key={index} value={typeOption.name}>{typeOption.name}</MenuItem>
                                 ))}
-                                {/* <MenuItem value="Type A">Type A</MenuItem>
-                                <MenuItem value="Type B">Type B</MenuItem>
-                                <MenuItem value="Type C">Type C</MenuItem> */}
-                                {/* 여기에 더 많은 호텔 옵션을 추가할 수 있습니다 */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -408,7 +362,7 @@ const OptionForm = ({
                     />
                 </Grid>
 
-                <Grid item xs={12} sx={{ mt: 5, mb: 5 }}>
+                {/* <Grid item xs={12} sx={{ mt: 5, mb: 5 }}>
                     <FormControl fullWidth>
                         <InputLabel id="addOption-select-label">추가 옵션</InputLabel>
                         <Select
@@ -422,10 +376,9 @@ const OptionForm = ({
                             <MenuItem value="option1">option1</MenuItem>
                             <MenuItem value="option2">option2</MenuItem>
                             <MenuItem value="option3">option3</MenuItem>
-                            {/* 여기에 더 많은 호텔 옵션을 추가할 수 있습니다 */}
                         </Select>
                     </FormControl>
-                </Grid>
+                </Grid> */}
             </Grid>
 
             {/* <Divider sx={{ mt: 5, mb: 2 }} /> */}
