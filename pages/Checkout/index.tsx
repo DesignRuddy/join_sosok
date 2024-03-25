@@ -66,7 +66,7 @@ export default function Checkout(props: parentsProps) {
     setFormData({ ...formData, ...newData });
     // setInfoData({...infoData, ...newData })
   };
-  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string; optionPrice?: number}) => {
+  const updateInfoData = (newData: { hotel?: string; roomType?: string; companyName?: string; position?: string; department?: string; checkIn?: string; checkOut?: string; optionPrice?: number }) => {
     setInfoData({ ...infoData, ...newData })
   }
 
@@ -169,10 +169,14 @@ export default function Checkout(props: parentsProps) {
 
       const result = await fetch('/api/result', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(requestData),
       })
       const resultBody = await result.json();
+      console.log("resultBody", resultBody);
+      
 
       if (result.ok) {
         try {
@@ -182,21 +186,21 @@ export default function Checkout(props: parentsProps) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              requestData:requestData,
-              hotelName:requestData.hotel,
-              userEmail:requestData.email,
+              requestData: requestData,
+              hotelName: requestData.hotel,
+              userEmail: requestData.email,
               hotelType: requestData.roomType,
               selectedOptions: requestData.addOption,
             }),
           });
           const resEmail = await response.json();
           console.log('success', resEmail);
-          
-     
-      } catch(error) {
-        console.error('Error sending email:', error);
+
+
+        } catch (error) {
+          console.error('Error sending email:', error);
+        }
       }
-    }
 
       //       if (result.ok) {
       //         console.log('Data sent successfully', resultBody);

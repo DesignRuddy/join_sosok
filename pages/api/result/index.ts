@@ -1,7 +1,8 @@
 import { GoogleSpreadsheet } from "google-spreadsheet"; // google-spreadsheet를 불러옵니다.
 import { JWT } from "google-auth-library"; // Google에 JWT 인증을 위해 google-auth-library를 불러옵니다.
-import credential from "@/lib/key.json"; // 다운로드한 인증 key.json을 불러옵니다.
+// import credential from "@/lib/key.json"; // 다운로드한 인증 key.json을 불러옵니다.
 import { NextApiRequest, NextApiResponse } from "next";
+
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]; // 해당 API로 sheets를 손대겠다는 범위 설정입니다.
 const documentID = "1A-xjbzcsqi9bkGExxMl1SoKViy-4IrGZaKck72dvB9s"; // Sheet의 고유 문서 ID입니다.
 // const jwt = new JWT({ ...});
